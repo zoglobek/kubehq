@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: oom-demo
+spec:
+  containers:
+    - name: memory-hog
+      image: python:3.9-slim
+      resources:
+        requests:
+          memory: "64Mi"
+        limits:
+          memory: "128Mi"
+      command: ["python3", "-c"]
+      args: ["data = ' ' * 300 * 1024 * 1024"]  # allocates 300MB in one line

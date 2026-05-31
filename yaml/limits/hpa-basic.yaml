@@ -1,0 +1,43 @@
+apiVersion: apps/v1        # Use the apps/v1 API group (standard for Deployments)
+kind: Deployment           # Resource type: manages a set of identical pods
+metadata:
+  name: nginx-hpa          # Name of this Deployment object
+spec:
+  replicas: 1              # Start with 1 pod (HPA will adjust this dynamically)
+  selector:
+    matchLabels:
+      app: nginx-hpa       # The Deployment manages pods that have this label
+  template:                # Pod template — defines what each pod looks like
+    metadata:
+      labels:
+        app: nginx-hpa     # Label applied to every pod created by this Deployment
+    spec:
+      containers:
+      - name: nginx        # Name of the container inside the pod
+        image: nginx       # Docker image to use (latest nginx from Docker Hub)
+        resources:
+          requests:
+            cpu: "500m"    # Minimum CPU guaranteed to this container (500 millicores = 0.5 core)
+            memory: "128Mi" # Minimum memory guaranteed to this container (128 mebibytes)
+          limits:
+            cpu: "800m"    # Maximum CPU this container is allowed to use (800 millicores = 0.8 core)
+            memory: "256Mi" # Maximum memory this container is allowed to use (256 mebibytes)
+---
+apiVersion: autoscaling/v2 # Use the autoscaling/v2 API group (supports multiple metric types)
+kind: HorizontalPodAutoscaler # Resource type: automatically scales pod count based on metrics
+metadata:
+  name: nginx-hpa          # Name of this HPA object
+spec:
+  scaleTargetRef:          # Points the HPA to the resource it should scale
+    apiVersion: apps/v1    # API group of the target resource
+    kind: Deployment       # Target resource type
+    name: nginx-hpa        # Must match the Deployment name above
+  minReplicas: 1           # Never scale below 1 pod (even under zero load)
+  maxReplicas: 5           # Never scale above 5 pods (cost/resource ceiling)
+  metrics:
+  - type: Resource         # Scale based on a built-in resource metric (CPU or memory)
+    resource:
+      name: cpu            # The specific resource to watch
+      target:
+        type: Utilization        # Use percentage of the requested CPU (not raw cores)
+        averageUtilization: 30

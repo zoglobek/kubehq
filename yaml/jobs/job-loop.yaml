@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: loop-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: loop
+        image: busybox
+        command: ["sh", "-c", "for i in $(seq 1 5); do echo $i; done"]
+      restartPolicy: Never

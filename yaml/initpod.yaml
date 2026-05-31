@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-init-container
+spec:
+  initContainers:
+    - name: init-wait
+      image: busybox
+      command: ["sh", "-c", "echo 'Initializing...'; sleep 5; echo 'Running tests...'; sleep 5; echo 'Initialization is done'"]
+  containers:
+    - name: app-container
+      image: busybox
+      command: ["sh", "-c", "echo 'The app is ready for use'; sleep infinity"]

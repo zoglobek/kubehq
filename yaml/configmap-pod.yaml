@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-file-demo  # Name of the Pod
+spec:
+  containers:
+  - name: app  # Name of the container
+    image: busybox  # Uses a minimal BusyBox image
+    command: [ "/bin/sh", "-c", "cat /etc/config/config.yaml; sleep 3600" ]
+    # The container prints the contents of /etc/config/config.yaml and then sleeps for 1 hour
+
+    volumeMounts:
+    - name: config-volume  # Refers to the volume defined below
+      mountPath: "/etc/config"  # The ConfigMap will be mounted at this directory
+
+  volumes:
+  - name: config-volume  # Volume name
+    configMap:
+      name: app-config  # References the ConfigMap named "app-config"

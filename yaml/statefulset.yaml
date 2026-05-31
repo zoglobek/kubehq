@@ -1,0 +1,30 @@
+apiVersion: apps/v1       # Kubernetes API version for StatefulSet
+kind: StatefulSet         # Resource type: StatefulSet (for stateful pods)
+metadata:
+  name: nginx             # Name of the StatefulSet
+spec:
+  serviceName: "nginx"    # Headless service used for network identity of pods
+  replicas: 3             # Number of pod replicas to create
+  selector:
+    matchLabels:
+      app: nginx          # Selector: which pods belong to this StatefulSet
+  template:
+    metadata:
+      labels:
+        app: nginx        # Labels applied to each pod
+    spec:
+      containers:
+      - name: nginx       # Name of the container
+        image: nginx:1.25 # Container image
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html  # Path inside container where PVC is mounted
+  volumeClaimTemplates:   # Template for automatically creating PVCs for each pod
+  - metadata:
+      name: www           # Name of the PVC template
+    spec:
+      accessModes: ["ReadWriteOnce"]      # Access mode: pod can read/write the volume, only one pod at a time
+      storageClassName: "local-path"      # Storage class to dynamically provision storage (k3s default)
+      resources:
+        requests:
+          storage: 0.5Gi  # Requested size of storage for each pod (changed from 1Gi → 0.5Gi)

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sa-test-pod
+spec:
+  serviceAccountName: demo-sa
+  containers:
+  - name: test-container
+    image: bitnami/kubectl:latest
+    command: ["sleep", "3600"]

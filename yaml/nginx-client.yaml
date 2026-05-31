@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-client
+  namespace: task1
+  labels:
+    access: nginx          # Label matches the NetworkPolicy rule
+spec:
+  containers:
+  - name: client
+    image: nginx
+    command: ["sleep", "3600"]

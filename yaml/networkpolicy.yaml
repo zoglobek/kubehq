@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-access-to-nginx
+  namespace: task1
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx          # Targets only the nginx pod
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          access: nginx   # Only pods with label access=nginx can connect
+    ports:
+    - protocol: TCP
+      port: 80            # Allow HTTP only

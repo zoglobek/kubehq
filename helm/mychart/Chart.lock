@@ -1,0 +1,6 @@
+dependencies:
+- name: mysubapp
+  repository: file://../mysubapp
+  version: 0.1.0
+digest: sha256:f4363fffda78c4ffa8fcaa5c6abd1354c0cf40e425dfa1659b7beb1ddac0fcdb
+generated: "2026-05-26T17:25:30.875176806Z"

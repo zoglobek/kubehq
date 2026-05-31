@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-env
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-env
+---
+apiVersion: apps/רוv1
+kind: Namespace
+metadata:
+  name: prod-env
