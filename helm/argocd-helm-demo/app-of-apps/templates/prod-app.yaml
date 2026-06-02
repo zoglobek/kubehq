@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
-    path: nginx
+    path: helm/nginx
     helm:
       valueFiles:
         - ../environments/prod/values.yaml
