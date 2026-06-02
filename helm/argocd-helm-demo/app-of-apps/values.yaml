@@ -1,0 +1,2 @@
+repoURL: https://github.com/zoglobek/kubehq/tree/main/helm/argocd-helm-demo
+targetRevision: HEAD
