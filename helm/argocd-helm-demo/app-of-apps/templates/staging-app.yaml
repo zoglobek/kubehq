@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
-    path: helm/nginx
+    path: helm/argocd-helm-demo/nginx
     helm:
       valueFiles:
         - ../environments/staging/values.yaml
