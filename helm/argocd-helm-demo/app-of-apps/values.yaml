@@ -1,3 +1,3 @@
 repoURL: https://github.com/zoglobek/kubehq
 targetRevision: main
-path: tree/main/helm/argocd-helm-demo/app-of-apps
+path: helm/argocd-helm-demo/app-of-apps
