@@ -1,0 +1,4 @@
+apiVersion: v2
+name: app-of-apps
+version: 0.1.0
+description: Root application that manages all environment applications
